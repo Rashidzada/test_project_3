@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact List</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Custom animations */
+        .icon-button {
+            transition: transform 0.2s, color 0.2s;
+        }
+        .icon-button:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-100 p-6">
+    {% for message in messages %}
+    <script>
+        alert('{{ message }}');
+    </script>
+    {% endfor %}
+    <div class="container mx-auto">
+        <div class="flex justify-between items-center mb-6">
+            <h1 class="text-3xl font-bold">Contact List</h1>
+            <button class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">
+                <i class="fas fa-plus mr-2"></i>
+                <a href="{% url 'contact' %}">Add New Contact</a>
+            </button>
+        </div>
+        <div class="bg-white shadow-md rounded-lg overflow-hidden">
+            <table class="min-w-full bg-white">
+                <thead>
+                    <tr>
+                        <th class="py-2 px-4 bg-gray-100 border-b text-left text-sm font-semibold text-gray-600">ID</th>
+                        <th class="py-2 px-4 bg-gray-100 border-b text-left text-sm font-semibold text-gray-600">Name</th>
+                        <th class="py-2 px-4 bg-gray-100 border-b text-left text-sm font-semibold text-gray-600">Email</th>
+                        <th class="py-2 px-4 bg-gray-100 border-b text-left text-sm font-semibold text-gray-600">Subject</th>
+                        <th class="py-2 px-4 bg-gray-100 border-b text-left text-sm font-semibold text-gray-600">Message</th>
+                        <th class="py-2 px-4 bg-gray-100 border-b text-left text-sm font-semibold text-gray-600">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for contact in contacts %}
+                    <tr class="hover:bg-gray-50">
+                        <td class="py-2 px-4 border-b">{{ contact.id }}</td>
+                        <td class="py-2 px-4 border-b">{{ contact.name }}</td>
+                        <td class="py-2 px-4 border-b">{{ contact.email }}</td>
+                        <td class="py-2 px-4 border-b">{{ contact.subject }}</td>
+                        <td class="py-2 px-4 border-b">{{ contact.message }}</td>
+                        <td class="py-2 px-4 border-b flex space-x-2">
+                            <a href="{% url 'view_contact' contact.pk %}" class="text-blue-500 hover:text-blue-700 icon-button flex items-center">
+                                <i class="fas fa-eye mr-1"></i> View
+                            </a>
+                            <a href="{% url 'edit_contact' contact.pk %}" class="text-green-500 hover:text-green-700 icon-button flex items-center">
+                                <i class="fas fa-edit mr-1"></i> Edit
+                            </a>
+                            <a href="{% url 'delete_contact' contact.pk %}" class="text-red-500 hover:text-red-700 icon-button flex items-center">
+                                <i class="fas fa-trash-alt mr-1"></i> Delete
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    <!-- More rows as needed -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
