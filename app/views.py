@@ -3,12 +3,23 @@ from .import models
 from django.contrib import messages
 
 # Create your views here.
+
 def index(request):
-    contact = models.Contact.objects.all().order_by('-id')
+    if request.method == "POST":
+        query = request.POST.get('q', '')
+        if query: # when we call to if statment its mean true
+            contacts = models.Contact.objects.filter(id=query)
+        else:
+            contacts = models.Contact.objects.all().order_by('-id')
+    else:
+        contacts = models.Contact.objects.all().order_by('-id')
+        
     context = {
-        'contacts':contact
+        'contacts': contacts
     }
-    return render(request,'index.html',context)
+    return render(request, 'index.html', context)
+
+
 
 
 def contact(request):
